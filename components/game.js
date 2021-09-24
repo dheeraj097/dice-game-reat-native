@@ -24,10 +24,12 @@ class Game extends Component {
     ]
 
     Newgame = () => {
-        // PlayingGame = true
-        // scores = [0, 0]
-        // roundScore = 0
-        // activePlayer = 0
+        this.setState({
+            diceIndex: 0,
+            activePlayer: 0,
+            roundScore: 0,
+            scores: [0, 0]
+        })
     }
 
     RollDice = () => {
@@ -59,6 +61,7 @@ class Game extends Component {
     holdGame = () => {
 
         const score = this.state.scores[this.state.activePlayer] + this.state.roundScore
+        console.log(score)
         const scores = [...this.state.scores]
         scores[this.state.activePlayer] = score
         console.log(scores)
@@ -74,6 +77,20 @@ class Game extends Component {
         this.setState({
             activePlayer: this.state.activePlayer ? 0 : 1
         })
+
+        if (score >= 100) {
+            let playerwon = this.state.activePlayer+1
+            Alert.alert(
+                "Player " + playerwon + " Won !!!",
+                "My Alert Msg",
+                [
+                    {
+                        text: "New Game",
+                        onPress: () => this.Newgame(),
+                    },
+                ]
+            );
+        }
     }
 
     render() {
@@ -94,9 +111,9 @@ class Game extends Component {
                             </View>
                             <Text style={{ fontSize: 30, marginBottom: 30 }}>{scores[0]}</Text>
 
-                            <View style={{alignItems: 'center',width:100,padding:12, backgroundColor:'red'}}>
-                                <Text style={{ fontSize: 17, color:'white'}}>CURRENT</Text>
-                                <Text style={{ fontSize: 18, color:'white'}}>{activePlayer ? 0 : roundScore}</Text>
+                            <View style={{ alignItems: 'center', width: 100, padding: 12, backgroundColor: 'red' }}>
+                                <Text style={{ fontSize: 17, color: 'white' }}>CURRENT</Text>
+                                <Text style={{ fontSize: 18, color: 'white' }}>{activePlayer ? 0 : roundScore}</Text>
                             </View>
                         </View>
 
@@ -107,9 +124,9 @@ class Game extends Component {
                             </View>
                             <Text style={{ fontSize: 30, marginBottom: 30 }}>{scores[1]}</Text>
 
-                            <View style={{alignItems: 'center',width:100,padding:12, backgroundColor:'red'}}>
-                                <Text style={{ fontSize: 17, color:'white'}}>CURRENT</Text>
-                                <Text style={{ fontSize: 18, color:'white'}}>{activePlayer ? roundScore : 0}</Text>
+                            <View style={{ alignItems: 'center', width: 100, padding: 12, backgroundColor: 'red' }}>
+                                <Text style={{ fontSize: 17, color: 'white' }}>CURRENT</Text>
+                                <Text style={{ fontSize: 18, color: 'white' }}>{activePlayer ? roundScore : 0}</Text>
                             </View>
                         </View>
 
